@@ -1,0 +1,168 @@
+aid: photon-health
+url: https://raw.githubusercontent.com/api-evangelist/photon-health/refs/heads/main/apis.yml
+name: Photon Health
+kind: company
+description: Photon Health is a modern e-prescribing (eRx) platform that lets digital-health
+  organizations create patients, write prescriptions, route orders to pharmacies, and
+  manage fulfillment through a single GraphQL Clinical API. The platform pairs the API
+  with embeddable Elements UI components, webhooks, and a transparent prescription
+  marketplace for pharmacy price and fulfillment comparison.
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+tags:
+- Health
+- e-Prescribing
+- eRx
+- Prescriptions
+- Pharmacy
+- GraphQL
+created: '2026-06-21'
+modified: '2026-06-21'
+specificationVersion: '0.19'
+apis:
+- aid: photon-health:photon-health-patients-api
+  name: Photon Health Patients API
+  tags:
+  - Patients
+  - Demographics
+  - Allergies
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.photon.health/reference/clinical-api
+  baseURL: https://api.photon.health/graphql
+  properties:
+  - url: https://docs.photon.health/docs/sync-patients
+    type: Documentation
+  - url: https://docs.photon.health/reference/clinical-api
+    type: APIReference
+  - url: graphql/photon-health-graphql.md
+    type: GraphQL
+  - url: openapi/photon-health-openapi.yml
+    type: OpenAPI
+  description: GraphQL queries and mutations for creating and managing patients - demographics,
+    sex and gender, contact details, allergies, medication history, addresses, and
+    preferred pharmacies - via patient, patients, createPatient, and updatePatient.
+- aid: photon-health:photon-health-prescriptions-api
+  name: Photon Health Prescriptions API
+  tags:
+  - Prescriptions
+  - eRx
+  - Refills
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.photon.health/reference/clinical-api
+  baseURL: https://api.photon.health/graphql
+  properties:
+  - url: https://docs.photon.health/docs/getting-started
+    type: Documentation
+  - url: https://docs.photon.health/reference/clinical-api
+    type: APIReference
+  - url: graphql/photon-health-graphql.md
+    type: GraphQL
+  - url: openapi/photon-health-openapi.yml
+    type: OpenAPI
+  description: Write and manage prescriptions with dosing, dispense quantity, refills,
+    days supply, instructions, diagnoses, and effective/expiration dates via prescription,
+    prescriptions, createPrescription, createPrescriptions, and cancelPrescription,
+    including built-in drug-drug interaction screening.
+- aid: photon-health:photon-health-orders-api
+  name: Photon Health Orders API
+  tags:
+  - Orders
+  - Fulfillment
+  - Fills
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.photon.health/reference/clinical-api
+  baseURL: https://api.photon.health/graphql
+  properties:
+  - url: https://docs.photon.health/docs/place-orders
+    type: Documentation
+  - url: https://docs.photon.health/reference/clinical-api
+    type: APIReference
+  - url: graphql/photon-health-graphql.md
+    type: GraphQL
+  - url: openapi/photon-health-openapi.yml
+    type: OpenAPI
+  description: Route prescriptions to pharmacies as orders with fills and delivery
+    addresses, and track fulfillment state via order, orders, createOrder, updateOrder,
+    cancelOrder, and the fill query.
+- aid: photon-health:photon-health-catalog-api
+  name: Photon Health Catalog & Medications API
+  tags:
+  - Catalog
+  - Medications
+  - Templates
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.photon.health/reference/clinical-api
+  baseURL: https://api.photon.health/graphql
+  properties:
+  - url: https://docs.photon.health/reference/clinical-api
+    type: Documentation
+  - url: https://docs.photon.health/reference/clinical-api
+    type: APIReference
+  - url: graphql/photon-health-graphql.md
+    type: GraphQL
+  - url: openapi/photon-health-openapi.yml
+    type: OpenAPI
+  description: Search the medication catalog and manage organization formularies and
+    reusable prescription templates via medications, medicationConcepts, medicationStrengths,
+    medicationForms, medicationProducts, medicationPackages, medicalEquipment, dispenseUnits,
+    allergens, catalog, catalogs, and the addToCatalog / createPrescriptionTemplate
+    mutations.
+- aid: photon-health:photon-health-pharmacies-api
+  name: Photon Health Pharmacies API
+  tags:
+  - Pharmacies
+  - NPI
+  - NCPDP
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.photon.health/reference/clinical-api
+  baseURL: https://api.photon.health/graphql
+  properties:
+  - url: https://docs.photon.health/reference/clinical-api
+    type: Documentation
+  - url: https://docs.photon.health/reference/clinical-api
+    type: APIReference
+  - url: graphql/photon-health-graphql.md
+    type: GraphQL
+  - url: openapi/photon-health-openapi.yml
+    type: OpenAPI
+  description: Search pharmacies by name, location, and fulfillment type (PICK_UP or
+    MAIL_ORDER) and retrieve NPI, NCPDP, address, fax, and phone via the pharmacy and
+    pharmacies queries.
+- aid: photon-health:photon-health-webhooks-api
+  name: Photon Health Webhooks API
+  tags:
+  - Webhooks
+  - Events
+  - Notifications
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://docs.photon.health/docs/webhooks
+  baseURL: https://api.photon.health/graphql
+  properties:
+  - url: https://docs.photon.health/docs/webhooks
+    type: Documentation
+  - url: https://docs.photon.health/docs/order-events
+    type: APIReference
+  - url: graphql/photon-health-graphql.md
+    type: GraphQL
+  - url: openapi/photon-health-openapi.yml
+    type: OpenAPI
+  description: Subscribe to signed webhook events to receive state changes for orders
+    (photon:order:created and related) and prescriptions (photon:prescription:* events),
+    typically used to trigger fulfillment emails and save medications to patient profiles.
+common:
+- type: GitHubOrganization
+  url: https://github.com/Photon-Health
+- type: LinkedIn
+  url: https://www.linkedin.com/company/photon-health
+- type: Website
+  url: https://www.photon.health
+- type: Documentation
+  url: https://docs.photon.health
+- type: Plans
+  url: plans/photon-health-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/photon-health-rate-limits.yml
+- type: FinOps
+  url: finops/photon-health-finops.yml
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

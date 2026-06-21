@@ -1,0 +1,446 @@
+"""
+Photon Health Clinical API — representative GraphQL schema (SDL).
+
+NOTE: This SDL is a representative model assembled from Photon Health's public
+documentation and API reference (https://docs.photon.health/reference/clinical-api).
+It is intended to capture the documented operations and types of the Clinical API.
+Consult the official reference at https://reference.photon.health/ for the
+authoritative, complete schema.
+
+Endpoint:  https://api.photon.health/graphql   (production)
+           https://api.neutron.health/graphql  (Neutron sandbox)
+Auth:      OAuth2 Bearer token (client_credentials exchange via auth.photon.health)
+"""
+
+# ---------------------------------------------------------------------------
+# Scalars
+# ---------------------------------------------------------------------------
+
+scalar AWSDate
+scalar AWSDateTime
+scalar AWSEmail
+scalar AWSPhone
+
+# ---------------------------------------------------------------------------
+# Enums
+# ---------------------------------------------------------------------------
+
+enum SexType {
+  MALE
+  FEMALE
+  UNKNOWN
+}
+
+enum GenderType {
+  MAN
+  WOMAN
+  TRANSGENDER_MAN
+  TRANSGENDER_WOMAN
+  NON_BINARY
+  OTHER
+  UNKNOWN
+}
+
+enum PrescriptionState {
+  ACTIVE
+  EXPIRED
+  DEPLETED
+  CANCELED
+}
+
+enum OrderState {
+  ROUTING
+  PENDING
+  PLACED
+  COMPLETED
+  CANCELED
+  ERROR
+}
+
+enum FillState {
+  SCHEDULED
+  NEW
+  SENT
+  CANCELED
+}
+
+enum FulfillmentType {
+  PICK_UP
+  MAIL_ORDER
+}
+
+enum MedicationType {
+  RX
+  OTC
+}
+
+# ---------------------------------------------------------------------------
+# Shared types
+# ---------------------------------------------------------------------------
+
+type Name {
+  title: String
+  first: String
+  middle: String
+  last: String
+  full: String
+}
+
+type Address {
+  street1: String
+  street2: String
+  city: String
+  state: String
+  postalCode: String
+  country: String
+}
+
+input NameInput {
+  title: String
+  first: String!
+  middle: String
+  last: String!
+}
+
+input AddressInput {
+  street1: String!
+  street2: String
+  city: String!
+  state: String!
+  postalCode: String!
+  country: String
+}
+
+input GeoLocationInput {
+  latitude: Float!
+  longitude: Float!
+  radius: Int
+}
+
+# ---------------------------------------------------------------------------
+# Patient
+# ---------------------------------------------------------------------------
+
+type Patient {
+  id: ID!
+  externalId: String
+  name: Name!
+  dateOfBirth: AWSDate
+  sex: SexType
+  gender: GenderType
+  email: AWSEmail
+  phone: AWSPhone
+  address: Address
+  allergies: [PatientAllergy!]
+  medicationHistory: [PatientMedication!]
+  prescriptions: [Prescription!]
+  orders: [Order!]
+  preferredPharmacies: [Pharmacy!]
+}
+
+type PatientAllergy {
+  allergen: Allergen!
+  onset: AWSDate
+  comment: String
+}
+
+type PatientMedication {
+  medication: Medication
+  active: Boolean
+  comment: String
+}
+
+# ---------------------------------------------------------------------------
+# Prescriber
+# ---------------------------------------------------------------------------
+
+type Prescriber {
+  id: ID!
+  name: Name!
+  NPI: String
+  address: Address
+  phone: AWSPhone
+}
+
+# ---------------------------------------------------------------------------
+# Prescription
+# ---------------------------------------------------------------------------
+
+type Diagnosis {
+  code: String!
+  name: String
+}
+
+type Prescription {
+  id: ID!
+  externalId: String
+  prescriber: Prescriber
+  patient: Patient!
+  state: PrescriptionState!
+  treatment: Medication!
+  dispenseQuantity: Float
+  dispenseUnit: String
+  refillsAllowed: Int
+  refillsRemaining: Int
+  daysSupply: Int
+  instructions: String
+  notes: String
+  diagnoses: [Diagnosis!]
+  effectiveDate: AWSDate
+  expirationDate: AWSDate
+  fills: [Fill!]
+  writtenAt: AWSDateTime
+}
+
+type PrescriptionTemplate {
+  id: ID!
+  name: String!
+  treatment: Medication!
+  dispenseQuantity: Float
+  dispenseUnit: String
+  fillsAllowed: Int
+  daysSupply: Int
+  instructions: String
+}
+
+# ---------------------------------------------------------------------------
+# Order & Fill
+# ---------------------------------------------------------------------------
+
+type Fill {
+  id: ID!
+  state: FillState!
+  prescription: Prescription
+  order: Order
+  requestedAt: AWSDateTime
+  filledAt: AWSDateTime
+}
+
+type OrderFulfillment {
+  type: FulfillmentType!
+  state: String
+  carrier: String
+  trackingNumber: String
+}
+
+type Order {
+  id: ID!
+  externalId: String
+  state: OrderState!
+  patient: Patient!
+  pharmacy: Pharmacy
+  fills: [Fill!]
+  fulfillment: OrderFulfillment
+  address: Address
+  createdAt: AWSDateTime
+}
+
+input FillInput {
+  prescriptionId: ID!
+}
+
+# ---------------------------------------------------------------------------
+# Medication & Catalog
+# ---------------------------------------------------------------------------
+
+type Medication {
+  id: ID!
+  name: String!
+  type: MedicationType
+  codes: MedicationCodes
+  strength: String
+  form: String
+}
+
+type MedicationCodes {
+  rxcui: String
+  ndc: String
+  HCPCS: String
+}
+
+type MedicationConcept {
+  id: ID!
+  name: String!
+}
+
+type MedicationStrength {
+  id: ID!
+  name: String!
+}
+
+type MedicationForm {
+  id: ID!
+  name: String!
+}
+
+type MedicationProduct {
+  id: ID!
+  name: String!
+  brandName: String
+  genericName: String
+}
+
+type MedicationPackage {
+  id: ID!
+  name: String!
+  quantity: Float
+  unit: String
+}
+
+type MedicalEquipment {
+  id: ID!
+  name: String!
+}
+
+type Allergen {
+  id: ID!
+  name: String!
+}
+
+type DispenseUnit {
+  id: ID!
+  name: String!
+}
+
+type Catalog {
+  id: ID!
+  name: String
+  treatments: [Medication!]
+  templates: [PrescriptionTemplate!]
+}
+
+# ---------------------------------------------------------------------------
+# Pharmacy
+# ---------------------------------------------------------------------------
+
+type Pharmacy {
+  id: ID!
+  name: String!
+  NPI: String
+  NCPDP: String
+  address: Address
+  fax: String
+  phone: AWSPhone
+  fulfillmentTypes: [FulfillmentType!]
+}
+
+# ---------------------------------------------------------------------------
+# Filters
+# ---------------------------------------------------------------------------
+
+input PatientFilter {
+  name: String
+  externalId: String
+}
+
+input PrescriptionFilter {
+  patientId: ID
+  prescriberId: ID
+  state: PrescriptionState
+}
+
+input OrderFilter {
+  patientId: ID
+  state: OrderState
+}
+
+input MedicationFilter {
+  name: String
+  type: MedicationType
+  code: String
+}
+
+input AllergenFilter {
+  name: String
+}
+
+# ---------------------------------------------------------------------------
+# Query
+# ---------------------------------------------------------------------------
+
+type Query {
+  # Patients
+  patient(id: ID!): Patient
+  patients(filter: PatientFilter, after: ID, first: Int): [Patient!]
+
+  # Prescriptions
+  prescription(id: ID!): Prescription
+  prescriptions(filter: PrescriptionFilter, after: ID, first: Int): [Prescription!]
+
+  # Orders & Fills
+  order(id: ID!): Order
+  orders(filter: OrderFilter, after: ID, first: Int): [Order!]
+  fill(id: ID!): Fill
+
+  # Medications & Catalog
+  medications(filter: MedicationFilter, after: ID, first: Int): [Medication!]
+  medicationConcepts(name: String!): [MedicationConcept!]
+  medicationStrengths(id: ID!): [MedicationStrength!]
+  medicationRoutes(id: ID!): [MedicationForm!]
+  medicationForms(id: ID!): [MedicationForm!]
+  medicationProducts(id: ID!): [MedicationProduct!]
+  medicationPackages(id: ID!): [MedicationPackage!]
+  medicalEquipment(name: String!, after: ID, first: Int): [MedicalEquipment!]
+  dispenseUnits: [DispenseUnit!]
+  allergens(filter: AllergenFilter): [Allergen!]
+  catalog(id: ID!): Catalog
+  catalogs: [Catalog!]
+
+  # Pharmacies
+  pharmacy(id: ID!): Pharmacy
+  pharmacies(
+    name: String
+    location: GeoLocationInput
+    type: FulfillmentType
+    after: ID
+    first: Int
+  ): [Pharmacy!]
+}
+
+# ---------------------------------------------------------------------------
+# Mutation
+# ---------------------------------------------------------------------------
+
+type Mutation {
+  # Patients
+  createPatient(
+    externalId: String
+    name: NameInput!
+    dateOfBirth: AWSDate
+    sex: SexType
+    gender: GenderType
+    email: AWSEmail
+    phone: AWSPhone
+    address: AddressInput
+  ): Patient
+  updatePatient(id: ID!, name: NameInput, email: AWSEmail, phone: AWSPhone, address: AddressInput): Patient
+  removePatientAllergy(id: ID!, allergenId: ID!): Patient
+  removePatientPreferredPharmacy(patientId: ID!, pharmacyId: ID!): Patient
+
+  # Prescriptions
+  createPrescription(
+    patientId: ID!
+    medicationId: ID!
+    dispenseQuantity: Float!
+    dispenseUnit: String!
+    fillsAllowed: Int
+    daysSupply: Int
+    instructions: String
+    notes: String
+    effectiveDate: AWSDate
+  ): Prescription
+  createPrescriptions(prescriptions: [ID!]!): [Prescription!]
+  cancelPrescription(id: ID!): Prescription
+
+  # Orders
+  createOrder(patientId: ID!, fills: [FillInput!]!, pharmacyId: ID, address: AddressInput): Order
+  updateOrder(id: ID!, externalId: String): Order
+  cancelOrder(id: ID!): Order
+
+  # Catalog & Templates
+  addToCatalog(catalogId: ID!, treatmentId: ID!): Catalog
+  removeFromCatalog(catalogId: ID!, treatmentId: ID!): Catalog
+  createPrescriptionTemplate(catalogId: ID!, name: String!, treatmentId: ID!): PrescriptionTemplate
+  updatePrescriptionTemplate(id: ID!, name: String): PrescriptionTemplate
+  deletePrescriptionTemplate(id: ID!): Boolean
+}

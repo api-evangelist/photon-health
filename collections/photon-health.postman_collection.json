@@ -1,0 +1,274 @@
+{
+  "info": {
+    "name": "Photon Health Clinical API",
+    "description": "GraphQL Clinical API for Photon Health. Every operation is a POST to https://api.photon.health/graphql authenticated with an OAuth2 Bearer access token (client_credentials exchange against auth.photon.health). Set the accessToken collection variable before sending requests.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{accessToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://api.photon.health"
+    },
+    {
+      "key": "accessToken",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Patients",
+      "item": [
+        {
+          "name": "List patients",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/graphql",
+              "host": ["{{baseUrl}}"],
+              "path": ["graphql"]
+            },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query { patients(first: 10) { id externalId name { full } dateOfBirth sex } }",
+                "variables": "{}"
+              }
+            },
+            "description": "List the organization's patients via the patients query."
+          }
+        },
+        {
+          "name": "Get patient by id",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/graphql",
+              "host": ["{{baseUrl}}"],
+              "path": ["graphql"]
+            },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query GetPatient($id: ID!) { patient(id: $id) { id externalId name { full } allergies { allergen { name } } prescriptions { id state } preferredPharmacies { id name } } }",
+                "variables": "{\n  \"id\": \"pat_01H...\"\n}"
+              }
+            },
+            "description": "Retrieve a single patient and related records via the patient query."
+          }
+        },
+        {
+          "name": "Create patient",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/graphql",
+              "host": ["{{baseUrl}}"],
+              "path": ["graphql"]
+            },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation CreatePatient($name: NameInput!) { createPatient(externalId: \"ext-1001\", name: $name, dateOfBirth: \"1990-12-10\", sex: FEMALE, email: \"ada@example.com\", phone: \"+12025550100\") { id externalId } }",
+                "variables": "{\n  \"name\": { \"first\": \"Ada\", \"last\": \"Lovelace\" }\n}"
+              }
+            },
+            "description": "Create a new patient via the createPatient mutation."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Prescriptions",
+      "item": [
+        {
+          "name": "List prescriptions",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/graphql",
+              "host": ["{{baseUrl}}"],
+              "path": ["graphql"]
+            },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query Prescriptions($patientId: ID!) { prescriptions(filter: { patientId: $patientId }, first: 25) { id state treatment { name } refillsRemaining daysSupply } }",
+                "variables": "{\n  \"patientId\": \"pat_01H...\"\n}"
+              }
+            },
+            "description": "List prescriptions, optionally filtered by patient, prescriber, or state."
+          }
+        },
+        {
+          "name": "Create prescription",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/graphql",
+              "host": ["{{baseUrl}}"],
+              "path": ["graphql"]
+            },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation CreatePrescription($patientId: ID!, $medicationId: ID!) { createPrescription(patientId: $patientId, medicationId: $medicationId, dispenseQuantity: 30, dispenseUnit: \"Each\", fillsAllowed: 3, daysSupply: 30, instructions: \"Take one tablet by mouth daily.\") { id state refillsAllowed } }",
+                "variables": "{\n  \"patientId\": \"pat_01H...\",\n  \"medicationId\": \"med_01H...\"\n}"
+              }
+            },
+            "description": "Write a new prescription via the createPrescription mutation; drug-drug interaction screening runs by default."
+          }
+        },
+        {
+          "name": "Cancel prescription",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/graphql",
+              "host": ["{{baseUrl}}"],
+              "path": ["graphql"]
+            },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation CancelPrescription($id: ID!) { cancelPrescription(id: $id) { id state } }",
+                "variables": "{\n  \"id\": \"rx_01H...\"\n}"
+              }
+            },
+            "description": "Cancel an active prescription via the cancelPrescription mutation."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Orders",
+      "item": [
+        {
+          "name": "Create order",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/graphql",
+              "host": ["{{baseUrl}}"],
+              "path": ["graphql"]
+            },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation CreateOrder($patientId: ID!, $fills: [FillInput!]!, $pharmacyId: ID) { createOrder(patientId: $patientId, fills: $fills, pharmacyId: $pharmacyId) { id state pharmacy { name } fills { id state } } }",
+                "variables": "{\n  \"patientId\": \"pat_01H...\",\n  \"pharmacyId\": \"phr_01H...\",\n  \"fills\": [ { \"prescriptionId\": \"rx_01H...\" } ]\n}"
+              }
+            },
+            "description": "Route prescriptions to a pharmacy via the createOrder mutation."
+          }
+        },
+        {
+          "name": "Cancel order",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/graphql",
+              "host": ["{{baseUrl}}"],
+              "path": ["graphql"]
+            },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "mutation CancelOrder($id: ID!) { cancelOrder(id: $id) { id state } }",
+                "variables": "{\n  \"id\": \"ord_01H...\"\n}"
+              }
+            },
+            "description": "Cancel a mail-order order via the cancelOrder mutation (pick-up orders cannot be canceled)."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Catalog & Medications",
+      "item": [
+        {
+          "name": "Search medications",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/graphql",
+              "host": ["{{baseUrl}}"],
+              "path": ["graphql"]
+            },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query SearchMedications($name: String!) { medications(filter: { name: $name }, first: 10) { id name type strength form } }",
+                "variables": "{\n  \"name\": \"lisinopril\"\n}"
+              }
+            },
+            "description": "Search the medication catalog via the medications query."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Pharmacies",
+      "item": [
+        {
+          "name": "Search pharmacies",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/graphql",
+              "host": ["{{baseUrl}}"],
+              "path": ["graphql"]
+            },
+            "body": {
+              "mode": "graphql",
+              "graphql": {
+                "query": "query FindPharmacies($lat: Float!, $lng: Float!) { pharmacies(location: { latitude: $lat, longitude: $lng, radius: 25 }, type: PICK_UP, first: 10) { id name NPI NCPDP address { street1 city state postalCode } fulfillmentTypes } }",
+                "variables": "{\n  \"lat\": 40.7128,\n  \"lng\": -74.006\n}"
+              }
+            },
+            "description": "Search pharmacies by location and fulfillment type via the pharmacies query."
+          }
+        }
+      ]
+    }
+  ]
+}

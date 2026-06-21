@@ -1,0 +1,207 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Photon Health Clinical API",
+    "version": "1.0",
+    "description": "GraphQL Clinical API for Photon Health. All operations are POST requests to https://api.photon.health/graphql with an OAuth2 Bearer access token."
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{accessToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Patients",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List patients",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.photon.health/graphql",
+            "body": {
+              "type": "json",
+              "data": "{\"query\":\"query { patients(first: 10) { id externalId name { full } dateOfBirth sex } }\"}"
+            }
+          },
+          "docs": "List the organization's patients via the patients query."
+        },
+        {
+          "info": {
+            "name": "Get patient by id",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.photon.health/graphql",
+            "body": {
+              "type": "json",
+              "data": "{\"query\":\"query GetPatient($id: ID!) { patient(id: $id) { id externalId name { full } allergies { allergen { name } } prescriptions { id state } } }\",\"variables\":{\"id\":\"pat_01H...\"}}"
+            }
+          },
+          "docs": "Retrieve a single patient and related records via the patient query."
+        },
+        {
+          "info": {
+            "name": "Create patient",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.photon.health/graphql",
+            "body": {
+              "type": "json",
+              "data": "{\"query\":\"mutation CreatePatient($name: NameInput!) { createPatient(externalId: \\\"ext-1001\\\", name: $name, dateOfBirth: \\\"1990-12-10\\\", sex: FEMALE, email: \\\"ada@example.com\\\", phone: \\\"+12025550100\\\") { id externalId } }\",\"variables\":{\"name\":{\"first\":\"Ada\",\"last\":\"Lovelace\"}}}"
+            }
+          },
+          "docs": "Create a new patient via the createPatient mutation."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Prescriptions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List prescriptions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.photon.health/graphql",
+            "body": {
+              "type": "json",
+              "data": "{\"query\":\"query Prescriptions($patientId: ID!) { prescriptions(filter: { patientId: $patientId }, first: 25) { id state treatment { name } refillsRemaining } }\",\"variables\":{\"patientId\":\"pat_01H...\"}}"
+            }
+          },
+          "docs": "List prescriptions, optionally filtered by patient, prescriber, or state."
+        },
+        {
+          "info": {
+            "name": "Create prescription",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.photon.health/graphql",
+            "body": {
+              "type": "json",
+              "data": "{\"query\":\"mutation CreatePrescription($patientId: ID!, $medicationId: ID!) { createPrescription(patientId: $patientId, medicationId: $medicationId, dispenseQuantity: 30, dispenseUnit: \\\"Each\\\", fillsAllowed: 3, daysSupply: 30, instructions: \\\"Take one tablet by mouth daily.\\\") { id state refillsAllowed } }\",\"variables\":{\"patientId\":\"pat_01H...\",\"medicationId\":\"med_01H...\"}}"
+            }
+          },
+          "docs": "Write a new prescription via the createPrescription mutation."
+        },
+        {
+          "info": {
+            "name": "Cancel prescription",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.photon.health/graphql",
+            "body": {
+              "type": "json",
+              "data": "{\"query\":\"mutation CancelPrescription($id: ID!) { cancelPrescription(id: $id) { id state } }\",\"variables\":{\"id\":\"rx_01H...\"}}"
+            }
+          },
+          "docs": "Cancel an active prescription via the cancelPrescription mutation."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Orders",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.photon.health/graphql",
+            "body": {
+              "type": "json",
+              "data": "{\"query\":\"mutation CreateOrder($patientId: ID!, $fills: [FillInput!]!, $pharmacyId: ID) { createOrder(patientId: $patientId, fills: $fills, pharmacyId: $pharmacyId) { id state pharmacy { name } fills { id state } } }\",\"variables\":{\"patientId\":\"pat_01H...\",\"pharmacyId\":\"phr_01H...\",\"fills\":[{\"prescriptionId\":\"rx_01H...\"}]}}"
+            }
+          },
+          "docs": "Route prescriptions to a pharmacy via the createOrder mutation."
+        },
+        {
+          "info": {
+            "name": "Cancel order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.photon.health/graphql",
+            "body": {
+              "type": "json",
+              "data": "{\"query\":\"mutation CancelOrder($id: ID!) { cancelOrder(id: $id) { id state } }\",\"variables\":{\"id\":\"ord_01H...\"}}"
+            }
+          },
+          "docs": "Cancel a mail-order order via the cancelOrder mutation."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Catalog & Medications",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search medications",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.photon.health/graphql",
+            "body": {
+              "type": "json",
+              "data": "{\"query\":\"query SearchMedications($name: String!) { medications(filter: { name: $name }, first: 10) { id name type strength form } }\",\"variables\":{\"name\":\"lisinopril\"}}"
+            }
+          },
+          "docs": "Search the medication catalog via the medications query."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Pharmacies",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Search pharmacies",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.photon.health/graphql",
+            "body": {
+              "type": "json",
+              "data": "{\"query\":\"query FindPharmacies($lat: Float!, $lng: Float!) { pharmacies(location: { latitude: $lat, longitude: $lng, radius: 25 }, type: PICK_UP, first: 10) { id name NPI NCPDP address { street1 city state postalCode } } }\",\"variables\":{\"lat\":40.7128,\"lng\":-74.006}}"
+            }
+          },
+          "docs": "Search pharmacies by location and fulfillment type via the pharmacies query."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,88 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Photon Health
+providerId: photon-health
+created: '2026-06-21'
+modified: '2026-06-21'
+reconciled: false
+tags:
+- Health
+- e-Prescribing
+- eRx
+- Prescriptions
+- Pharmacy
+- FinOps
+- Cost Management
+- FOCUS
+description: >-
+  FinOps view of Photon Health spend. Photon is a sales-led B2B e-prescribing
+  platform with negotiated commercial agreements rather than published
+  usage-based rates. Cost drivers are most plausibly tied to prescription /
+  order volume and the production organizations under contract, but specific
+  metering and pricing are not publicly documented and are not reconciled here.
+notes: >-
+  Photon does not publish a usage-based price list; commercial terms are
+  negotiated. Treat the meters below as a modeling hypothesis to confirm with
+  Photon Health during reconciliation.
+sources:
+- https://www.photon.health
+- https://docs.photon.health
+- https://focus.finops.org/focus-specification/v1-3/
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: Photon Health
+serviceCategory: Healthcare and Life Sciences
+billingModel:
+  pricingCategory: Commitment-Based
+  billingFrequency: Monthly
+  billingCurrency: USD
+  chargeCategories:
+  - Usage
+  - Purchase
+focusColumns:
+  ServiceName: Photon Health Clinical API
+  ServiceCategory: Healthcare and Life Sciences
+  ProviderName: Photon Health
+  PublisherName: Photon Health
+  InvoiceIssuerName: Photon Health
+  BillingCurrency: USD
+  ChargeCategory: Usage
+  PricingCategory: Commitment-Based
+meters:
+- name: prescriptions
+  description: Prescriptions written through the Clinical API (modeling hypothesis - confirm with Photon).
+  unit: prescriptions
+  aggregation: sum
+  dimensions:
+  - organization
+  - prescriber
+- name: orders
+  description: Orders routed to pharmacies (modeling hypothesis - confirm with Photon).
+  unit: orders
+  aggregation: sum
+  dimensions:
+  - organization
+  - pharmacy
+- name: patients
+  description: Patients created and managed in Photon (modeling hypothesis - confirm with Photon).
+  unit: patients
+  aggregation: sum
+  dimensions:
+  - organization
+principles:
+- name: Visibility
+  description: Track prescription, order, and patient volume per organization against the negotiated contract.
+- name: Allocation
+  description: Tag OAuth2 clients per workload/team and map Photon usage to internal cost centers.
+- name: Optimization
+  description: Develop and test against the free Neutron sandbox before consuming production capacity.
+- name: Accountability
+  description: Assign an owner for the Photon commercial relationship and review volume against contract terms.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

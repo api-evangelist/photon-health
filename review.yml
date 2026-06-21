@@ -1,0 +1,83 @@
+aid: photon-health
+name: Photon Health
+review:
+  question: Does Photon Health expose a documented public WebSocket API?
+  answer: false
+  date: '2026-06-21'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: false
+  asyncapiScopeNote: |
+    Per current API Evangelist scope, HTTP Server-Sent Events (SSE) and
+    WebSocket realtime surfaces are in-scope for AsyncAPI modeling. Photon
+    Health documents neither. State changes are delivered asynchronously via
+    signed HTTP webhooks (POST callbacks to a subscriber URL), which is a
+    push-over-HTTP integration pattern rather than a WebSocket or SSE
+    transport. No AsyncAPI document was created because no streaming socket
+    surface is documented.
+findings:
+  summary: |
+    Photon Health is a native GraphQL platform. The entire Clinical API is
+    served over HTTPS at a single endpoint, POST https://api.photon.health/graphql
+    (with a Neutron sandbox at https://api.neutron.health/graphql), authenticated
+    with an OAuth2 Bearer access token obtained via a client_credentials
+    exchange against auth.photon.health. GraphQL queries and mutations are
+    documented; GraphQL subscriptions are not. Asynchronous state changes for
+    orders and prescriptions are delivered through signed HTTP webhooks, not a
+    WebSocket (ws:// or wss://) or SSE stream. No realtime bidirectional socket
+    endpoint is documented.
+  transports:
+    - protocol: GraphQL
+      scheme: https
+      baseURL: https://api.photon.health/graphql
+      documented: true
+      note: Single GraphQL endpoint (POST) for all Clinical API queries and mutations.
+    - protocol: Webhooks
+      scheme: https
+      documented: true
+      note: Signed HTTP webhook callbacks (e.g. photon:order:created, photon:prescription:*) push state changes to a subscriber URL. Push-over-HTTP, not WebSocket.
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: No WebSocket endpoint is documented in Photon's API reference or guides as of the review date.
+    - protocol: SSE
+      scheme: https
+      documented: false
+      note: No Server-Sent Events stream is documented; GraphQL subscriptions are not exposed.
+  endpointsConfirmed:
+    - POST https://api.photon.health/graphql
+    - POST https://api.neutron.health/graphql
+  operationsDocumented:
+    queries:
+      - patient / patients
+      - prescription / prescriptions
+      - order / orders / fill
+      - medications / medicationConcepts / medicationStrengths / medicationForms / medicationProducts / medicationPackages
+      - medicalEquipment / dispenseUnits / allergens / catalog / catalogs
+      - pharmacy / pharmacies
+    mutations:
+      - createPatient / updatePatient / removePatientAllergy / removePatientPreferredPharmacy
+      - createPrescription / createPrescriptions / cancelPrescription
+      - createOrder / updateOrder / cancelOrder
+      - addToCatalog / removeFromCatalog
+      - createPrescriptionTemplate / updatePrescriptionTemplate / deletePrescriptionTemplate
+sources:
+  - url: https://docs.photon.health
+    type: Documentation
+    note: Getting started and integration guides; GraphQL Clinical API only, no WebSocket mentioned.
+  - url: https://docs.photon.health/reference/clinical-api
+    type: APIReference
+    note: GraphQL endpoint https://api.photon.health/graphql with OAuth2 Bearer auth; queries and mutations documented.
+  - url: https://reference.photon.health/
+    type: APIReference
+    note: Clinical API reference listing queries and mutations by resource.
+  - url: https://docs.photon.health/docs/webhooks
+    type: Documentation
+    note: Signed HTTP webhooks deliver order and prescription state changes; not a WebSocket transport.
+actions:
+  asyncapiPath: null
+  apisYmlUpdated: true
+  reason: |
+    No WebSocket or SSE protocol surface exists. Asynchronous delivery is via
+    signed HTTP webhooks, which are represented as a Webhooks API in apis.yml
+    and described in graphql/photon-health-graphql.md. No AsyncAPI document was
+    authored because there is no documented streaming socket surface to model.

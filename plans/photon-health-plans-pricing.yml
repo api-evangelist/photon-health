@@ -1,0 +1,81 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Photon Health
+providerId: photon-health
+created: '2026-06-21'
+modified: '2026-06-21'
+reconciled: false
+tags:
+- Health
+- e-Prescribing
+- eRx
+- Prescriptions
+- Pharmacy
+- Plans
+description: >-
+  Photon Health is a sales-led, B2B e-prescribing platform. There is no
+  published self-serve pricing or public tier list; access is granted via a
+  requested account and pricing is negotiated with the Photon team based on use
+  case and volume. A Neutron sandbox is available for development and testing at
+  no cost. Specific commercial terms are not reconciled in this artifact.
+notes: >-
+  Pricing is not publicly published. Photon directs prospective customers to
+  request an account and email sales to discuss their use case. Verify
+  commercial terms directly with Photon Health during reconciliation.
+sources:
+- https://www.photon.health
+- https://docs.photon.health
+- https://docs.photon.health/docs/getting-started
+plans:
+- id: photon-health-sandbox
+  name: Neutron Sandbox
+  type: free
+  description: >-
+    Non-production Neutron environment (api.neutron.health) that behaves exactly
+    like production for developing and testing prescribing integrations.
+  entries:
+  - label: Sandbox Access
+    name: sandbox
+    type: flat
+    metric: access
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: free
+    userMultiplied: false
+  elements:
+  - name: Patients API
+  - name: Prescriptions API
+  - name: Orders API
+  - name: Catalog & Medications API
+  - name: Pharmacies API
+  - name: Webhooks
+  - name: Elements
+- id: photon-health-production
+  name: Production
+  type: enterprise
+  description: >-
+    Production Clinical API access (api.photon.health) granted via a requested
+    account. Commercial terms are negotiated with Photon Health sales based on
+    use case and volume.
+  entries:
+  - label: Commercial Agreement
+    name: commercial
+    type: flat
+    metric: contract
+    limit: -1
+    timeFrame: year
+    geo: global
+    unit: 1
+    price: contact sales
+    userMultiplied: false
+  elements:
+  - name: Production Clinical API
+  - name: Webhooks
+  - name: Elements
+  - name: Drug Interaction Screening
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

@@ -1,0 +1,51 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Photon Health
+providerId: photon-health
+created: '2026-06-21'
+modified: '2026-06-21'
+reconciled: false
+tags:
+- Health
+- e-Prescribing
+- eRx
+- Prescriptions
+- Pharmacy
+- Rate Limiting
+- Quotas
+- Throttling
+description: >-
+  Photon Health exposes a single GraphQL endpoint (POST
+  https://api.photon.health/graphql) authenticated with an OAuth2 Bearer token.
+  Photon does not publish specific public rate-limit values; quotas are managed
+  per organization and OAuth2 client. Clients should expect HTTP 429 on
+  throttling and implement backoff. Specific limit values are not reconciled in
+  this artifact.
+notes: >-
+  No public rate-limit numbers are documented. Confirm per-organization request
+  and concurrency limits with Photon Health during reconciliation.
+sources:
+- https://docs.photon.health
+- https://docs.photon.health/reference/clinical-api
+responseCodes:
+  throttled: 429
+limits:
+- name: GraphQL Requests
+  scope: organization
+  metric: requests
+  limit: see provider documentation
+  notes: Per-organization request limit on the GraphQL endpoint; specific value not published.
+- name: Token Requests
+  scope: client
+  metric: requests
+  limit: see provider documentation
+  notes: Limit on client_credentials token exchanges against auth.photon.health; specific value not published.
+policies:
+- name: Backoff Strategy
+  description: Clients should implement exponential backoff with jitter on HTTP 429 and honor any Retry-After header.
+- name: Token Reuse
+  description: Cache and reuse OAuth2 access tokens until expiry rather than minting a new token per request.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
