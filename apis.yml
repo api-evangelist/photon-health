@@ -149,6 +149,10 @@ apis:
     (photon:order:created and related) and prescriptions (photon:prescription:* events),
     typically used to trigger fulfillment emails and save medications to patient profiles.
 common:
+- type: DomainSecurity
+  url: security/photon-health-domain-security.yml
+- type: Authentication
+  url: authentication/photon-health-authentication.yml
 - type: GitHubOrganization
   url: https://github.com/Photon-Health
 - type: LinkedIn
@@ -163,6 +167,8 @@ common:
   url: rate-limits/photon-health-rate-limits.yml
 - type: FinOps
   url: finops/photon-health-finops.yml
+- url: https://photonhealth.com/blog
+  type: Blog
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

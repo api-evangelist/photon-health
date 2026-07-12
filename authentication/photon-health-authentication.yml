@@ -1,0 +1,15 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/photon-health-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  bearerFormat: JWT
+  description: OAuth2 Bearer access token obtained through a client_credentials exchange (client_id,
+    client_secret, audience, grant_type) against auth.photon.health.
+  sources:
+  - openapi/photon-health-openapi.yml
