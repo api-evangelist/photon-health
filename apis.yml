@@ -149,6 +149,8 @@ apis:
     (photon:order:created and related) and prescriptions (photon:prescription:* events),
     typically used to trigger fulfillment emails and save medications to patient profiles.
 common:
+- type: AgenticAccess
+  url: agentic-access/photon-health-agentic-access.yml
 - type: DomainSecurity
   url: security/photon-health-domain-security.yml
 - type: Authentication
