@@ -1,0 +1,14 @@
+{
+  "provider": "photon-health",
+  "sources": [
+    "photon-health-graphql-api-openapi.yml"
+  ],
+  "outputs": [
+    "photon-health-graphql-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

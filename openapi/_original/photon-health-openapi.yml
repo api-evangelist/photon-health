@@ -1,0 +1,118 @@
+openapi: 3.0.1
+info:
+  title: Photon Health Clinical API
+  description: >-
+    Photon Health is a native GraphQL e-prescribing (eRx) platform. The entire
+    Clinical API surface - patients, prescriptions, orders, the medication
+    catalog, and pharmacies - is exposed through a single GraphQL endpoint at
+    POST /graphql. This OpenAPI document models that single GraphQL transport
+    operation; see graphql/photon-health-schema.graphql for the GraphQL schema
+    and the documented queries and mutations.
+  termsOfService: https://www.photon.health/terms
+  contact:
+    name: Photon Health Support
+    url: https://docs.photon.health
+  version: '1.0'
+servers:
+  - url: https://api.photon.health
+    description: Production
+  - url: https://api.neutron.health
+    description: Neutron sandbox
+security:
+  - bearerAuth: []
+paths:
+  /graphql:
+    post:
+      operationId: executeGraphQL
+      tags:
+        - GraphQL
+      summary: Execute a GraphQL query or mutation against the Photon Clinical API.
+      description: >-
+        Single GraphQL endpoint for all Photon Health Clinical API operations.
+        Supply a GraphQL `query` (or mutation) string and optional `variables`.
+        Requires an OAuth2 Bearer access token obtained via a client_credentials
+        exchange against auth.photon.health.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GraphQLRequest'
+            examples:
+              listPatients:
+                summary: List patients
+                value:
+                  query: "query { patients(first: 10) { id externalId name { full } } }"
+              createOrder:
+                summary: Create an order
+                value:
+                  query: "mutation CreateOrder($patientId: ID!, $fills: [FillInput!]!, $pharmacyId: ID) { createOrder(patientId: $patientId, fills: $fills, pharmacyId: $pharmacyId) { id state } }"
+                  variables:
+                    patientId: pat_01H...
+                    pharmacyId: phr_01H...
+                    fills:
+                      - prescriptionId: rx_01H...
+      responses:
+        '200':
+          description: >-
+            A GraphQL response. Note that GraphQL returns HTTP 200 even when the
+            payload contains an `errors` array.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GraphQLResponse'
+        '401':
+          description: Missing or invalid Bearer access token.
+        '429':
+          description: Too many requests - rate limited.
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: >-
+        OAuth2 Bearer access token obtained through a client_credentials
+        exchange (client_id, client_secret, audience, grant_type) against
+        auth.photon.health.
+  schemas:
+    GraphQLRequest:
+      type: object
+      required:
+        - query
+      properties:
+        query:
+          type: string
+          description: The GraphQL query or mutation document.
+        operationName:
+          type: string
+          description: Name of the operation to execute, if the document defines several.
+        variables:
+          type: object
+          additionalProperties: true
+          description: Key/value map of GraphQL variables.
+    GraphQLResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          additionalProperties: true
+          nullable: true
+          description: The result of a successful operation.
+        errors:
+          type: array
+          description: Present when the operation produced one or more errors.
+          items:
+            $ref: '#/components/schemas/GraphQLError'
+    GraphQLError:
+      type: object
+      properties:
+        message:
+          type: string
+        path:
+          type: array
+          items:
+            type: string
+        extensions:
+          type: object
+          additionalProperties: true
