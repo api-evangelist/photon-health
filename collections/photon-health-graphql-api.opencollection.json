@@ -1,0 +1,39 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Photon Health Clinical GraphQL API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "GraphQL",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Execute a GraphQL query or mutation against the Photon Clinical API.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.photon.health/graphql",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Single GraphQL endpoint for all Photon Health Clinical API operations. Supply a GraphQL `query` (or mutation) string and optional `variables`. Requires an OAuth2 Bearer access token obtained via a client_credentials exchange against auth.photon.health."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

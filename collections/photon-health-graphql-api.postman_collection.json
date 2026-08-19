@@ -1,0 +1,234 @@
+{
+  "item": [
+    {
+      "id": "edcc0cce-e48f-4c80-b7a2-4fbebcfe3b03",
+      "name": "GraphQL",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a0dd6a0d-546e-42b1-a9d1-2e6ad31759c5",
+          "name": "Execute a GraphQL query or mutation against the Photon Clinical API.",
+          "request": {
+            "name": "Execute a GraphQL query or mutation against the Photon Clinical API.",
+            "description": {
+              "content": "Single GraphQL endpoint for all Photon Health Clinical API operations. Supply a GraphQL `query` (or mutation) string and optional `variables`. Requires an OAuth2 Bearer access token obtained via a client_credentials exchange against auth.photon.health.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "graphql"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"query\": \"<string>\",\n  \"operationName\": \"<string>\",\n  \"variables\": {\n    \"key_0\": \"string\",\n    \"key_1\": true\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "05629d45-60d3-4a87-a4ea-a3899b4f9063",
+              "name": "A GraphQL response. Note that GraphQL returns HTTP 200 even when the payload contains an `errors` array.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "graphql"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"query { patients(first: 10) { id externalId name { full } } }\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": {\n    \"key_0\": 4403,\n    \"key_1\": 3139.5476688649214,\n    \"key_2\": false\n  },\n  \"errors\": [\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ],\n      \"extensions\": {\n        \"key_0\": true\n      }\n    },\n    {\n      \"message\": \"string\",\n      \"path\": [\n        \"string\",\n        \"string\"\n      ],\n      \"extensions\": {\n        \"key_0\": \"string\",\n        \"key_1\": \"string\",\n        \"key_2\": 4312,\n        \"key_3\": true\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9d3570a0-5472-459d-9276-102b66106326",
+              "name": "Missing or invalid Bearer access token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "graphql"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"query { patients(first: 10) { id externalId name { full } } }\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "3c65a9c9-2a5f-4b32-abc2-5abda2e4081b",
+              "name": "Too many requests - rate limited.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "graphql"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"query\": \"query { patients(first: 10) { id externalId name { full } } }\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.photon.health",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "6630093e-a5d0-4d1e-a881-909b5fd6fe89",
+    "name": "Photon Health Clinical GraphQL API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Photon Health is a native GraphQL e-prescribing (eRx) platform. The entire Clinical API surface - patients, prescriptions, orders, the medication catalog, and pharmacies - is exposed through a single GraphQL endpoint at POST /graphql. This OpenAPI document models that single GraphQL transport operation; see graphql/photon-health-schema.graphql for the GraphQL schema and the documented queries and mutations.\n\nContact Support:\n Name: Photon Health Support",
+      "type": "text/plain"
+    }
+  }
+}
