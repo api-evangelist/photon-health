@@ -7,6 +7,18 @@ description: Photon Health is a modern e-prescribing (eRx) platform that lets di
   manage fulfillment through a single GraphQL Clinical API. The platform pairs the API
   with embeddable Elements UI components, webhooks, and a transparent prescription
   marketplace for pharmacy price and fulfillment comparison.
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 accessModel:
   pricing: freemium
   onboarding: self-serve
