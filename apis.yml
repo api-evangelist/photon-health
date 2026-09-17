@@ -46,16 +46,16 @@ created: '2026-06-21'
 modified: '2026-06-21'
 specificationVersion: '0.23'
 apis:
-- aid: photon-health:photon-health-graphql-api
-  name: Photon Health GraphQL API
-  description: The GraphQL API from Photon Health — 1 operation(s) for graphql.
+- aid: photon-health:photon-health-graph-ql-api
+  name: Photon Health Graph QL API
+  description: The Graph QL API from Photon Health — 1 operation(s) for graph ql.
   humanURL: https://docs.photon.health/reference/clinical-api
   baseURL: https://api.photon.health/graphql
   tags:
-  - GraphQL
+  - Graph QL
   properties:
   - type: OpenAPI
-    url: openapi/photon-health-graphql-api-openapi.yml
+    url: openapi/photon-health-graph-ql-api-openapi.yml
   - type: Documentation
     url: https://docs.photon.health/docs/sync-patients
   - type: APIReference
