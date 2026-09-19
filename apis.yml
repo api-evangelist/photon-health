@@ -52,6 +52,8 @@ apis:
   humanURL: https://docs.photon.health/reference/clinical-api
   baseURL: https://api.photon.health/graphql
   tags:
+  - GraphQL
+  tags_raw:
   - Graph QL
   properties:
   - type: OpenAPI
