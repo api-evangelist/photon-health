@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Photon Health Clinical GraphQL API
+  title: Photon Health Clinical Graph QL API
   description: Photon Health is a native GraphQL e-prescribing (eRx) platform. The entire Clinical API surface - patients, prescriptions, orders, the medication catalog, and pharmacies - is exposed through a single GraphQL endpoint at POST /graphql. This OpenAPI document models that single GraphQL transport operation; see graphql/photon-health-schema.graphql for the GraphQL schema and the documented queries and mutations.
   termsOfService: https://www.photon.health/terms
   contact:
@@ -15,14 +15,14 @@ servers:
 security:
 - bearerAuth: []
 tags:
-- name: GraphQL
+- name: Graph QL
 paths:
   /graphql:
     post:
       operationId: executeGraphQL
       tags:
-      - GraphQL
-      summary: Execute a GraphQL query or mutation against the Photon Clinical API.
+      - Graph QL
+      summary: Execute a GraphQL query or mutation against the Photon Clinical API
       description: Single GraphQL endpoint for all Photon Health Clinical API operations. Supply a GraphQL `query` (or mutation) string and optional `variables`. Requires an OAuth2 Bearer access token obtained via a client_credentials exchange against auth.photon.health.
       requestBody:
         required: true
@@ -57,19 +57,6 @@ paths:
           description: Too many requests - rate limited.
 components:
   schemas:
-    GraphQLResponse:
-      type: object
-      properties:
-        data:
-          type: object
-          additionalProperties: true
-          nullable: true
-          description: The result of a successful operation.
-        errors:
-          type: array
-          description: Present when the operation produced one or more errors.
-          items:
-            $ref: '#/components/schemas/GraphQLError'
     GraphQLError:
       type: object
       properties:
@@ -97,6 +84,20 @@ components:
           type: object
           additionalProperties: true
           description: Key/value map of GraphQL variables.
+    GraphQLResponse:
+      type: object
+      properties:
+        data:
+          type:
+          - object
+          - 'null'
+          additionalProperties: true
+          description: The result of a successful operation.
+        errors:
+          type: array
+          description: Present when the operation produced one or more errors.
+          items:
+            $ref: '#/components/schemas/GraphQLError'
   securitySchemes:
     bearerAuth:
       type: http
