@@ -57,32 +57,6 @@ paths:
           description: Too many requests - rate limited.
 components:
   schemas:
-    GraphQLResponse:
-      type: object
-      properties:
-        data:
-          type:
-          - object
-          - 'null'
-          additionalProperties: true
-          description: The result of a successful operation.
-        errors:
-          type: array
-          description: Present when the operation produced one or more errors.
-          items:
-            $ref: '#/components/schemas/GraphQLError'
-    GraphQLError:
-      type: object
-      properties:
-        message:
-          type: string
-        path:
-          type: array
-          items:
-            type: string
-        extensions:
-          type: object
-          additionalProperties: true
     GraphQLRequest:
       type: object
       required:
@@ -98,6 +72,32 @@ components:
           type: object
           additionalProperties: true
           description: Key/value map of GraphQL variables.
+    GraphQLError:
+      type: object
+      properties:
+        message:
+          type: string
+        path:
+          type: array
+          items:
+            type: string
+        extensions:
+          type: object
+          additionalProperties: true
+    GraphQLResponse:
+      type: object
+      properties:
+        data:
+          type:
+          - object
+          - 'null'
+          additionalProperties: true
+          description: The result of a successful operation.
+        errors:
+          type: array
+          description: Present when the operation produced one or more errors.
+          items:
+            $ref: '#/components/schemas/GraphQLError'
   securitySchemes:
     bearerAuth:
       type: http
