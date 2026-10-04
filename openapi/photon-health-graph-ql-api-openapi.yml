@@ -57,21 +57,6 @@ paths:
           description: Too many requests - rate limited.
 components:
   schemas:
-    GraphQLRequest:
-      type: object
-      required:
-      - query
-      properties:
-        query:
-          type: string
-          description: The GraphQL query or mutation document.
-        operationName:
-          type: string
-          description: Name of the operation to execute, if the document defines several.
-        variables:
-          type: object
-          additionalProperties: true
-          description: Key/value map of GraphQL variables.
     GraphQLError:
       type: object
       properties:
@@ -98,6 +83,21 @@ components:
           description: Present when the operation produced one or more errors.
           items:
             $ref: '#/components/schemas/GraphQLError'
+    GraphQLRequest:
+      type: object
+      required:
+      - query
+      properties:
+        query:
+          type: string
+          description: The GraphQL query or mutation document.
+        operationName:
+          type: string
+          description: Name of the operation to execute, if the document defines several.
+        variables:
+          type: object
+          additionalProperties: true
+          description: Key/value map of GraphQL variables.
   securitySchemes:
     bearerAuth:
       type: http
