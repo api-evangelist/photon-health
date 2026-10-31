@@ -1,4 +1,4 @@
-# Photon Health (photon-health)
+# Photon Health
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,167 +66,122 @@
 
 Photon Health is a modern e-prescribing (eRx) platform that lets digital-health organizations create patients, write prescriptions, route orders to pharmacies, and manage fulfillment through a single GraphQL Clinical API. The platform pairs the API with embeddable Elements UI components, webhooks, and a transparent prescription marketplace for pharmacy price and fulfillment comparison.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/photon-health/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/photon-health/refs/heads/main/apis.yml)
+**Areas:** Health · e-Prescribing · eRx · Prescriptions · Pharmacy · GraphQL
 
-## Tags
+## Photon Health on APIs.io
 
-- Health
-- e-Prescribing
-- eRx
-- Prescriptions
-- Pharmacy
-- GraphQL
+Everything profiled for Photon Health is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/photon-health/](https://apis.io/providers/photon-health/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### APIs (1)
 
-- **Created:** 2026-06-21
-- **Modified:** 2026-06-21
+- [Photon Health Graph QL API](https://apis.io/apis/photon-health/photon-health-graph-ql-api/) — The Graph QL API from Photon Health — 1 operation(s) for graph ql.
 
-## APIs
+### Published properties
 
-### Photon Health Patients API
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-GraphQL queries and mutations for creating and managing patients - demographics, sex and gender, contact details, allergies, medication history, addresses, and preferred pharmacies - via patient, patients, createPatient, and updatePatient.
+#### GraphQL (1)
 
-- **Human URL:** [https://docs.photon.health/reference/clinical-api](https://docs.photon.health/reference/clinical-api)
-- **Base URL:** `https://api.photon.health/graphql`
+GraphQL schemas.
 
-#### Tags
+- [Photon Health GraphQL API](https://apis.io/graphqls/photon-health/photon-health-graphql/)
 
-- Patients
-- Demographics
-- Allergies
+#### Agentic access (1)
 
-#### Properties
+Which operations an agent can call, which act, and which need a human in the loop.
 
-- [Documentation](https://docs.photon.health/docs/sync-patients)
-- [API Reference](https://docs.photon.health/reference/clinical-api)
-- [GraphQL](graphql/photon-health-graphql.md) — [GraphQL Specification](https://spec.graphql.org/)
-- [OpenAPI](openapi/photon-health-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/photon-health.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/photon-health.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Photon Health Agentic Access](https://apis.io/agentic-access/photon-health/photon-health-agentic-access/)
 
-### Photon Health Prescriptions API
+#### Collections (2)
 
-Write and manage prescriptions with dosing, dispense quantity, refills, days supply, instructions, diagnoses, and effective/expiration dates via prescription, prescriptions, createPrescription, createPrescriptions, and cancelPrescription, including built-in drug-drug interaction screening.
+Postman and Open Collection request collections.
 
-- **Human URL:** [https://docs.photon.health/reference/clinical-api](https://docs.photon.health/reference/clinical-api)
-- **Base URL:** `https://api.photon.health/graphql`
+- [Photon Health Clinical API](https://apis.io/collections/photon-health/open-photon-health/)
+- [Photon Health Clinical GraphQL API](https://apis.io/collections/photon-health/open-photon-health-graphql-api/)
 
-#### Tags
+#### Security (2)
 
-- Prescriptions
-- eRx
-- Refills
+Authentication, trust centre, and vulnerability disclosure.
 
-#### Properties
+- [Photon Health Authentication](https://apis.io/security/photon-health/photon-health-authentication/)
+- [Photon Health Domain Security](https://apis.io/security/photon-health/photon-health-domain-security/)
 
-- [Documentation](https://docs.photon.health/docs/getting-started)
-- [API Reference](https://docs.photon.health/reference/clinical-api)
-- [GraphQL](graphql/photon-health-graphql.md) — [GraphQL Specification](https://spec.graphql.org/)
-- [OpenAPI](openapi/photon-health-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/photon-health.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/photon-health.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### Plans and pricing (1)
 
-### Photon Health Orders API
+Published plans, tiers and prices.
 
-Route prescriptions to pharmacies as orders with fills and delivery addresses, and track fulfillment state via order, orders, createOrder, updateOrder, cancelOrder, and the fill query.
+- [Photon Health Plans Pricing](https://apis.io/plans/photon-health/photon-health-plans-pricing/)
 
-- **Human URL:** [https://docs.photon.health/reference/clinical-api](https://docs.photon.health/reference/clinical-api)
-- **Base URL:** `https://api.photon.health/graphql`
+#### Rate limits (1)
 
-#### Tags
+Published request limits.
 
-- Orders
-- Fulfillment
-- Fills
+- [Photon Health Rate Limits](https://apis.io/rate-limits/photon-health/photon-health-rate-limits/)
 
-#### Properties
+#### FinOps (1)
 
-- [Documentation](https://docs.photon.health/docs/place-orders)
-- [API Reference](https://docs.photon.health/reference/clinical-api)
-- [GraphQL](graphql/photon-health-graphql.md) — [GraphQL Specification](https://spec.graphql.org/)
-- [OpenAPI](openapi/photon-health-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/photon-health.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/photon-health.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+What the API costs to run, by operation.
 
-### Photon Health Catalog & Medications API
+- [Photon Health Finops](https://apis.io/finops/photon-health/photon-health-finops/)
 
-Search the medication catalog and manage organization formularies and reusable prescription templates via medications, medicationConcepts, medicationStrengths, medicationForms, medicationProducts, medicationPackages, medicalEquipment, dispenseUnits, allergens, catalog, catalogs, and the addToCatalog / createPrescriptionTemplate mutations.
+## Where to find this API
 
-- **Human URL:** [https://docs.photon.health/reference/clinical-api](https://docs.photon.health/reference/clinical-api)
-- **Base URL:** `https://api.photon.health/graphql`
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
 
-#### Tags
-
-- Catalog
-- Medications
-- Templates
-
-#### Properties
-
-- [Documentation](https://docs.photon.health/reference/clinical-api)
-- [API Reference](https://docs.photon.health/reference/clinical-api)
-- [GraphQL](graphql/photon-health-graphql.md) — [GraphQL Specification](https://spec.graphql.org/)
-- [OpenAPI](openapi/photon-health-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/photon-health.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/photon-health.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Photon Health Pharmacies API
-
-Search pharmacies by name, location, and fulfillment type (PICK_UP or MAIL_ORDER) and retrieve NPI, NCPDP, address, fax, and phone via the pharmacy and pharmacies queries.
-
-- **Human URL:** [https://docs.photon.health/reference/clinical-api](https://docs.photon.health/reference/clinical-api)
-- **Base URL:** `https://api.photon.health/graphql`
-
-#### Tags
-
-- Pharmacies
-- NPI
-- NCPDP
-
-#### Properties
-
-- [Documentation](https://docs.photon.health/reference/clinical-api)
-- [API Reference](https://docs.photon.health/reference/clinical-api)
-- [GraphQL](graphql/photon-health-graphql.md) — [GraphQL Specification](https://spec.graphql.org/)
-- [OpenAPI](openapi/photon-health-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/photon-health.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/photon-health.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-### Photon Health Webhooks API
-
-Subscribe to signed webhook events to receive state changes for orders (photon:order:created and related) and prescriptions (photon:prescription:* events), typically used to trigger fulfillment emails and save medications to patient profiles.
-
-- **Human URL:** [https://docs.photon.health/docs/webhooks](https://docs.photon.health/docs/webhooks)
-- **Base URL:** `https://api.photon.health/graphql`
-
-#### Tags
-
-- Webhooks
-- Events
-- Notifications
-
-#### Properties
-
-- [Documentation](https://docs.photon.health/docs/webhooks)
-- [API Reference](https://docs.photon.health/docs/order-events)
-- [GraphQL](graphql/photon-health-graphql.md) — [GraphQL Specification](https://spec.graphql.org/)
-- [OpenAPI](openapi/photon-health-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/photon-health.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/photon-health.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
-
-## Common Properties
-
-- [GitHub Organization](https://github.com/Photon-Health)
-- [LinkedIn](https://www.linkedin.com/company/photon-health)
 - [Website](https://www.photon.health)
 - [Documentation](https://docs.photon.health)
-- [Plans](plans/photon-health-plans-pricing.yml)
-- [Rate Limits](rate-limits/photon-health-rate-limits.yml)
-- [Fin Ops](finops/photon-health-finops.yml)
+- [Blog](https://photonhealth.com/blog)
+- [GitHub](https://github.com/Photon-Health)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 26.0** — emerging · rubric 0.24.0 · scored 2026-10-17
+
+| Facet | Score |
+|---|---|
+| Discoverability | 66.1 |
+| Contract quality | 55.7 |
+| Contract governance | 0.0 |
+| Operational transparency | 7.9 |
+| Developer ergonomics | 22.6 |
+| Access clarity | 5.3 |
+
+**Agent readiness 22.9** — agent-aware
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | verified |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+
+**Regulatory alignment 9.4** — Health
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/photon-health/](https://apis.io/providers/photon-health/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Photon Health: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/photon-health/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
